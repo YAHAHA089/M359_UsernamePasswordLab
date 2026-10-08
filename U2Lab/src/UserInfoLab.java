@@ -3,29 +3,36 @@ public class UserInfoLab {
     public static void main(String[] args) {
         // Part 1
         Scanner scan = new Scanner(System.in);
-        System.out.println("Please put in your first name");
+        System.out.print("Please put in your first name: ");
         String firstName = scan.next();
-        System.out.println("Please put in your first name");
+        System.out.print("Please put in your first name: ");
         String lastName = scan.next();
-        String username = generateUsername(firstName,lastName);
+        String username = generateUsername(firstName, lastName);
+        System.out.println("Username: " + username);
 
         // Part 2
-        System.out.println("Please put in your password");
+        System.out.print("Please put in your password: ");
         String password = scan.next();
         boolean isPasswordValid = validatePassword(password);
 
         // Part 3
-        if(isPasswordValid){
-            System.out.println("Please put in your credit card number");
+        String maskedCreditCard = "";
+        if (isPasswordValid) {
+            System.out.println("Valid password");
+            System.out.println("Please put in your credit card number:");
             String creditCardNum = scan.next();
-            String isCardValid = maskCreditCard(creditCardNum);
+            maskedCreditCard = maskCreditCard(creditCardNum);
         }
-        // credit card number and pass this value to the maskCreditCard method.
 
         // Part 4
-        // If the user entered a valid password AND valid credit card number, display the output
-        // as shown in the demo video
-        // https://drive.google.com/file/d/1sMOw5wkOgSfuUcvQhFyZ5flnv_d9qQd3/view?usp=sharing
+        if (isPasswordValid && !maskedCreditCard.equals("N/A")){
+            System.out.println("Final details");
+            System.out.println("Username:   " + username);
+            System.out.println("Credit Card: "+ maskedCreditCard);
+        }
+        else{
+            System.out.println("Invalid card");
+        }
 
     }
 
@@ -48,7 +55,6 @@ public class UserInfoLab {
     }
     public static boolean validatePassword(String password) {
         boolean x = true;
-        String allUpperCaseLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         if(password.length() >= 8){
            x = x;
         }
@@ -57,13 +63,14 @@ public class UserInfoLab {
              x = false;
         }
         int y = 0;
+        String allUpperCaseLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         for(int i = 0; i<password.length(); i++){
             String letter = password.substring(i,i+1);
             if(allUpperCaseLetters.indexOf(letter) > 0){
                 y++;
             }
         }
-        if(y<0){
+        if(y>0){
             x = x;
         }
         else{
@@ -80,12 +87,25 @@ public class UserInfoLab {
         return x;
     }
     public static String maskCreditCard(String creditCardNumber) {
+        String maskedCard = "";
         if(creditCardNumber.length() == 16 && allDigits(creditCardNumber)){
             for(int i = 0; i < 16; i++){
-
+                if(i%4==0){
+                    maskedCard += " ";
+                }
+                if(i<12){
+                    maskedCard += "*";
+                }
+                else{
+                    maskedCard += creditCardNumber.charAt(i);
+                }
             }
         }
-        return "";
+        else{
+           maskedCard = "N/A";
+        }
+
+        return maskedCard;
     }
 
     /**
