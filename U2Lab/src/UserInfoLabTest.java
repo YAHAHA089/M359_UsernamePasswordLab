@@ -6,7 +6,7 @@
 //
 //public class UserInfoLabTest {
 //
-//    @Test
+//   @Test
 //    public void testGenerateUsernameTypicalCases() {
 //        assertEquals("johsmi", UserInfoLab.generateUsername("John", "Smith"));
 //        assertEquals("emmjoh", UserInfoLab.generateUsername("Emma", "Johnson"));
